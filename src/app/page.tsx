@@ -42,6 +42,28 @@ export default function Home() {
         </div>
       </section>
       <section className="flex flex-col items-center w-full max-w-5xl pb-8">
+        <h3 className="text-2xl">Choose an APR</h3>
+        <div className="join">
+          <div className="stats stats-horizontal border-2 border-primary">
+            <button className="stat hover:bg-black transition-all duration-300 group">
+              <p className="stat-title">APR</p>
+              <p className="stat-value group-hover:text-primary">17.99%</p>
+              <p className="stat-desc">2 week lock</p>
+            </button>
+            <button className="stat hover:bg-black transition-all duration-300 group">
+              <p className="stat-title">APR</p>
+              <p className="stat-value group-hover:text-primary">20.00%</p>
+              <p className="stat-desc">4 week lock</p>
+            </button>
+            <button className="stat hover:bg-black transition-all duration-300 group">
+              <p className="stat-title">APR</p>
+              <p className="stat-value group-hover:text-primary">25.00%</p>
+              <p className="stat-desc">12 week lock</p>
+            </button>
+          </div>
+        </div>
+      </section>
+      <section className="flex flex-col items-center w-full max-w-5xl pb-8">
         <div className="border-2 border-primary/70 p-8 min-w-[260px] rounded-2xl">
           <div className="flex flex-row items-center justify-between">
             <h2 className="text-2xl font-bold font-raleway">Stake $LYNX</h2>
