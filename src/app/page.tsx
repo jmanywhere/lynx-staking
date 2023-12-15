@@ -4,6 +4,7 @@ import StakingStats, { DepositAction } from "@/components/stake/Stats";
 import stakingBackground from "@/../public/Background 2.png";
 import { IoChevronDown } from "react-icons/io5";
 import AprSelect from "@/components/stake/AprSelect";
+import { Metadata } from "next";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center relative">
@@ -75,3 +76,9 @@ export default function Home() {
     </main>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Lynx Tech | Staking",
+  description:
+    "Stake your $LYNX and earn rewards. Tokens are locked for fixed periods of time, each period comes with it's own APR. More time, more rewards. Start staking for a minimum of 17.99% APR",
+};
