@@ -3,7 +3,6 @@
 import { aprSelectAtom } from "@/data/atoms";
 import {
   lynxConfig,
-  staking,
   staking18,
   staking20,
   staking25,
@@ -43,7 +42,7 @@ function SingleStat(props: { title: string; value: string }) {
 }
 
 const aprContracts = {
-  "0": staking,
+  "0": staking18,
   "18": staking18,
   "20": staking20,
   "25": staking25,
