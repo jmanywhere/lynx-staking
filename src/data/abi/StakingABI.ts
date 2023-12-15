@@ -1,370 +1,383 @@
 const abi = [
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "weekStart",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_lynx",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_vault",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+     "type":"constructor",
+     "inputs":[
+        {
+           "name":"weekStart",
+           "type":"uint256",
+           "internalType":"uint256"
+        },
+        {
+           "name":"_lynx",
+           "type":"address",
+           "internalType":"address"
+        },
+        {
+           "name":"_vault",
+           "type":"address",
+           "internalType":"address"
+        },
+        {
+           "name":"_apr",
+           "type":"uint256",
+           "internalType":"uint256"
+        },
+        {
+           "name":"time_lock",
+           "type":"uint256",
+           "internalType":"uint256"
+        }
+     ],
+     "stateMutability":"nonpayable"
   },
   {
-    "inputs": [],
-    "name": "LYNXStaking__InvalidAprSelected",
-    "type": "error"
+     "type":"function",
+     "name":"LockStart",
+     "inputs":[
+        
+     ],
+     "outputs":[
+        {
+           "name":"",
+           "type":"uint256",
+           "internalType":"uint256"
+        }
+     ],
+     "stateMutability":"view"
   },
   {
-    "inputs": [],
-    "name": "LYNXStaking__InvalidDepositAmount",
-    "type": "error"
+     "type":"function",
+     "name":"REWARD_APR_BASE",
+     "inputs":[
+        
+     ],
+     "outputs":[
+        {
+           "name":"",
+           "type":"uint256",
+           "internalType":"uint256"
+        }
+     ],
+     "stateMutability":"view"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "lockEndTime",
-        "type": "uint256"
-      }
-    ],
-    "name": "LYNXStaking__WithdrawLocked",
-    "type": "error"
+     "type":"function",
+     "name":"aprConfig",
+     "inputs":[
+        
+     ],
+     "outputs":[
+        {
+           "name":"setup",
+           "type":"bool",
+           "internalType":"bool"
+        },
+        {
+           "name":"apr",
+           "type":"uint256",
+           "internalType":"uint256"
+        },
+        {
+           "name":"duration",
+           "type":"uint256",
+           "internalType":"uint256"
+        }
+     ],
+     "stateMutability":"view"
   },
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "ClaimRewards",
-    "type": "event"
+     "type":"function",
+     "name":"calculateEndTime",
+     "inputs":[
+        {
+           "name":"duration",
+           "type":"uint256",
+           "internalType":"uint256"
+        }
+     ],
+     "outputs":[
+        {
+           "name":"",
+           "type":"uint256",
+           "internalType":"uint256"
+        }
+     ],
+     "stateMutability":"view"
   },
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "duration",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "rewardEnd",
-        "type": "uint256"
-      }
-    ],
-    "name": "Deposit",
-    "type": "event"
+     "type":"function",
+     "name":"currentRewards",
+     "inputs":[
+        {
+           "name":"user",
+           "type":"address",
+           "internalType":"address"
+        }
+     ],
+     "outputs":[
+        {
+           "name":"",
+           "type":"uint256",
+           "internalType":"uint256"
+        }
+     ],
+     "stateMutability":"view"
   },
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "LockedRewards",
-    "type": "event"
+     "type":"function",
+     "name":"deposit",
+     "inputs":[
+        {
+           "name":"amount",
+           "type":"uint256",
+           "internalType":"uint256"
+        }
+     ],
+     "outputs":[
+        
+     ],
+     "stateMutability":"nonpayable"
   },
   {
-    "inputs": [],
-    "name": "LockStart",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+     "type":"function",
+     "name":"getStakers",
+     "inputs":[
+        
+     ],
+     "outputs":[
+        {
+           "name":"users",
+           "type":"address[]",
+           "internalType":"address[]"
+        },
+        {
+           "name":"balances",
+           "type":"uint256[]",
+           "internalType":"uint256[]"
+        }
+     ],
+     "stateMutability":"view"
   },
   {
-    "inputs": [],
-    "name": "REWARD_APR_BASE",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+     "type":"function",
+     "name":"lynx",
+     "inputs":[
+        
+     ],
+     "outputs":[
+        {
+           "name":"",
+           "type":"address",
+           "internalType":"contract IERC20"
+        }
+     ],
+     "stateMutability":"view"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint8",
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "name": "aprConfig",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "apr",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint16",
-        "name": "duration",
-        "type": "uint16"
-      },
-      {
-        "internalType": "bool",
-        "name": "setup",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+     "type":"function",
+     "name":"stake",
+     "inputs":[
+        {
+           "name":"",
+           "type":"address",
+           "internalType":"address"
+        }
+     ],
+     "outputs":[
+        {
+           "name":"depositAmount",
+           "type":"uint256",
+           "internalType":"uint256"
+        },
+        {
+           "name":"startStake",
+           "type":"uint256",
+           "internalType":"uint256"
+        },
+        {
+           "name":"rewardEnd",
+           "type":"uint256",
+           "internalType":"uint256"
+        },
+        {
+           "name":"posIndex",
+           "type":"uint256",
+           "internalType":"uint256"
+        },
+        {
+           "name":"lockedRewards",
+           "type":"uint256",
+           "internalType":"uint256"
+        },
+        {
+           "name":"set",
+           "type":"bool",
+           "internalType":"bool"
+        }
+     ],
+     "stateMutability":"view"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint16",
-        "name": "duration",
-        "type": "uint16"
-      }
-    ],
-    "name": "calculateEndTime",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+     "type":"function",
+     "name":"stakers",
+     "inputs":[
+        {
+           "name":"",
+           "type":"uint256",
+           "internalType":"uint256"
+        }
+     ],
+     "outputs":[
+        {
+           "name":"",
+           "type":"address",
+           "internalType":"address"
+        }
+     ],
+     "stateMutability":"view"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      }
-    ],
-    "name": "currentRewards",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+     "type":"function",
+     "name":"totalClaimed",
+     "inputs":[
+        
+     ],
+     "outputs":[
+        {
+           "name":"",
+           "type":"uint256",
+           "internalType":"uint256"
+        }
+     ],
+     "stateMutability":"view"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "apr_choice",
-        "type": "uint8"
-      }
-    ],
-    "name": "deposit",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+     "type":"function",
+     "name":"totalStaked",
+     "inputs":[
+        
+     ],
+     "outputs":[
+        {
+           "name":"",
+           "type":"uint256",
+           "internalType":"uint256"
+        }
+     ],
+     "stateMutability":"view"
   },
   {
-    "inputs": [],
-    "name": "getStakers",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "users",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "balances",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+     "type":"function",
+     "name":"vault",
+     "inputs":[
+        
+     ],
+     "outputs":[
+        {
+           "name":"",
+           "type":"address",
+           "internalType":"contract ILynxVault"
+        }
+     ],
+     "stateMutability":"view"
   },
   {
-    "inputs": [],
-    "name": "lynx",
-    "outputs": [
-      {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+     "type":"function",
+     "name":"withdraw",
+     "inputs":[
+        
+     ],
+     "outputs":[
+        
+     ],
+     "stateMutability":"nonpayable"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "stake",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "depositAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startStake",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "rewardEnd",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "posIndex",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lockedRewards",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "apr_choice",
-        "type": "uint8"
-      },
-      {
-        "internalType": "bool",
-        "name": "set",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+     "type":"event",
+     "name":"ClaimRewards",
+     "inputs":[
+        {
+           "name":"user",
+           "type":"address",
+           "indexed":true,
+           "internalType":"address"
+        },
+        {
+           "name":"amount",
+           "type":"uint256",
+           "indexed":false,
+           "internalType":"uint256"
+        }
+     ],
+     "anonymous":false
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "stakers",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+     "type":"event",
+     "name":"Deposit",
+     "inputs":[
+        {
+           "name":"user",
+           "type":"address",
+           "indexed":true,
+           "internalType":"address"
+        },
+        {
+           "name":"amount",
+           "type":"uint256",
+           "indexed":false,
+           "internalType":"uint256"
+        },
+        {
+           "name":"duration",
+           "type":"uint256",
+           "indexed":false,
+           "internalType":"uint256"
+        },
+        {
+           "name":"rewardEnd",
+           "type":"uint256",
+           "indexed":false,
+           "internalType":"uint256"
+        }
+     ],
+     "anonymous":false
   },
   {
-    "inputs": [],
-    "name": "totalClaimed",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+     "type":"event",
+     "name":"LockedRewards",
+     "inputs":[
+        {
+           "name":"user",
+           "type":"address",
+           "indexed":true,
+           "internalType":"address"
+        },
+        {
+           "name":"amount",
+           "type":"uint256",
+           "indexed":false,
+           "internalType":"uint256"
+        }
+     ],
+     "anonymous":false
   },
   {
-    "inputs": [],
-    "name": "totalStaked",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+     "type":"error",
+     "name":"LYNXStaking__InvalidDepositAmount",
+     "inputs":[
+        
+     ]
   },
   {
-    "inputs": [],
-    "name": "vault",
-    "outputs": [
-      {
-        "internalType": "contract ILynxVault",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+     "type":"error",
+     "name":"LYNXStaking__WithdrawLocked",
+     "inputs":[
+        {
+           "name":"lockEndTime",
+           "type":"uint256",
+           "internalType":"uint256"
+        }
+     ]
   }
 ] as const;
 
