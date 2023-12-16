@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Logo from "../../public/logo.png";
-import StakingStats, { DepositAction } from "@/components/stake/Stats";
+import StakingStats, {
+  DepositAction,
+  StakeStats,
+} from "@/components/stake/Stats";
 import stakingBackground from "@/../public/Background 2.png";
 import { IoChevronDown } from "react-icons/io5";
 import AprSelect from "@/components/stake/AprSelect";
@@ -52,10 +55,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* <section className="pb-20">
+      <section className="py-10">
         <a className="relative block invisible -top-[100px]" id="stake" />
-        <div className=""></div>
-      </section> */}
+        <StakeStats />
+      </section>
     </main>
   );
 }

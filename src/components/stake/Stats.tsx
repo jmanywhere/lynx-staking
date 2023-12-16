@@ -11,7 +11,7 @@ import {
 } from "@/data/contracts";
 import classNames from "classnames";
 import { useAtomValue } from "jotai";
-import { useState } from "react";
+import { use, useState } from "react";
 import { formatEther, maxUint256, parseEther, zeroAddress } from "viem";
 import {
   useAccount,
@@ -20,6 +20,8 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
+import formatDuration from "date-fns/formatDuration";
+import intervalToDuration from "date-fns/intervalToDuration";
 
 export default function StakingStats() {
   const { data } = useContractReads({
@@ -212,3 +214,168 @@ export function DepositAction() {
     </>
   );
 }
+
+export function StakeStats() {
+  // const { address } = useAccount();
+  const address = "0x99dBC1387e0202e2aAF080DdD54c136E45931E1c";
+  const { data } = useContractReads({
+    contracts: [
+      {
+        address: staking18,
+        ...stakingConfig,
+        functionName: "totalStaked",
+      },
+      {
+        address: staking18,
+        ...stakingConfig,
+        functionName: "aprConfig",
+      },
+      {
+        address: staking18,
+        ...stakingConfig,
+        functionName: "stake",
+        args: [address || zeroAddress],
+      },
+      {
+        address: staking18,
+        ...stakingConfig,
+        functionName: "currentRewards",
+        args: [address || zeroAddress],
+      },
+      {
+        address: staking20,
+        ...stakingConfig,
+        functionName: "totalStaked",
+      },
+      {
+        address: staking20,
+        ...stakingConfig,
+        functionName: "aprConfig",
+      },
+      {
+        address: staking20,
+        ...stakingConfig,
+        functionName: "stake",
+        args: [address || zeroAddress],
+      },
+      {
+        address: staking20,
+        ...stakingConfig,
+        functionName: "currentRewards",
+        args: [address || zeroAddress],
+      },
+      {
+        address: staking25,
+        ...stakingConfig,
+        functionName: "totalStaked",
+      },
+      {
+        address: staking25,
+        ...stakingConfig,
+        functionName: "aprConfig",
+      },
+      {
+        address: staking25,
+        ...stakingConfig,
+        functionName: "stake",
+        args: [address || zeroAddress],
+      },
+      {
+        address: staking25,
+        ...stakingConfig,
+        functionName: "currentRewards",
+        args: [address || zeroAddress],
+      },
+    ],
+    watch: true,
+  });
+  console.log({ data });
+  return (
+    <table className="table overflow-hidden">
+      <thead className="bg-primary text-black">
+        <tr>
+          <th>APR</th>
+          <th className="hidden md:block">Total Stake</th>
+          <th>User Stake</th>
+          <th>Claim Time</th>
+          <th>Rewards</th>
+          <th className="hidden md:block">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <TableRow
+          apr="17.99%"
+          totalStaked={data?.[0]?.result || 0n}
+          userStaked={data?.[2]?.result?.[0] || 0n}
+          endTime={data?.[2]?.result?.[2] || 0n}
+          rewards={data?.[3]?.result || 0n}
+        />
+        <TableRow
+          apr="20%"
+          totalStaked={data?.[4]?.result || 0n}
+          userStaked={data?.[6]?.result?.[0] || 0n}
+          endTime={data?.[6]?.result?.[2] || 0n}
+          rewards={data?.[7]?.result || 0n}
+        />
+        <TableRow
+          apr="25%"
+          totalStaked={data?.[8]?.result || 0n}
+          userStaked={data?.[10]?.result?.[0] || 0n}
+          endTime={data?.[10]?.result?.[2] || 0n}
+          rewards={data?.[11]?.result || 0n}
+        />
+      </tbody>
+    </table>
+  );
+}
+
+const TableRow = (props: {
+  apr: string;
+  totalStaked: bigint;
+  userStaked: bigint;
+  endTime: bigint;
+  rewards: bigint;
+}) => {
+  const { apr, totalStaked, userStaked, endTime, rewards } = props;
+  console.log({
+    endTime,
+    isEnded: BigInt(Math.floor(Date.now() / 1000)) > (endTime || 0n),
+    now: BigInt(Math.floor(Date.now() / 1000)),
+  });
+  return (
+    <tr>
+      <td>{apr}</td>
+      <td className="hidden md:block">
+        {parseInt(formatEther(totalStaked || 0n)).toLocaleString()}
+      </td>
+      <td>{parseInt(formatEther(userStaked || 0n)).toLocaleString()}</td>
+      <td className="font-mono">
+        {(userStaked || 0n) > 0n
+          ? BigInt(Math.floor(Date.now() / 1000)) < (endTime || 0n)
+            ? formatDuration(
+                intervalToDuration({
+                  start: new Date(),
+                  end: new Date(parseInt((endTime || 0n).toString()) * 1000),
+                })
+              )
+                .replace(" months", "M")
+                .replace(" days", "D")
+                .replace(" hours ", "h")
+                .replace(" minutes ", "m")
+                .replace(" seconds", "s")
+            : "Claimable"
+          : "-"}
+      </td>
+      <td>
+        {parseFloat(formatEther(rewards || 0n)).toLocaleString(undefined, {
+          maximumFractionDigits: 4,
+        })}
+      </td>
+      <td className="hidden md:block">
+        <button className="btn" disabled>
+          Claim
+        </button>
+      </td>
+    </tr>
+  );
+};
