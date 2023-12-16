@@ -40,16 +40,20 @@ export default function StakingStats() {
         functionName: "totalStaked",
       },
     ],
+    watch: true,
   });
+
   return (
     <div className="stats shadow stats-vertical sm:stats-horizontal text-primary border-2 border-primary">
       <SingleStat
         title="Staked"
-        value={formatEther(
-          (data?.[0]?.result || 0n) +
-            (data?.[1]?.result || 0n) +
-            (data?.[2]?.result || 0n)
-        )}
+        value={parseInt(
+          formatEther(
+            (data?.[0]?.result || 0n) +
+              (data?.[1]?.result || 0n) +
+              (data?.[2]?.result || 0n)
+          )
+        ).toLocaleString()}
         desc="LYNX"
       />
       <SingleStat title="Min Lock" value="2" desc="Weeks" />
