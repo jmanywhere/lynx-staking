@@ -153,6 +153,11 @@ export function DepositAction() {
             className="input input-bordered input-secondary join-item"
             type="number"
             placeholder="000"
+            value={depositAmount}
+            onChange={(e) => {
+              if (isNaN(e.target.valueAsNumber)) setDepositAmount("");
+              else setDepositAmount(parseInt(e.target.value).toString());
+            }}
             onFocus={(e) => e.target.select()}
           />
           <button
@@ -168,7 +173,12 @@ export function DepositAction() {
         </div>
         <label className="label">
           <span className="label-text-alt">Wallet</span>
-          <span className="label-text-alt">0.00</span>
+          <span className="label-text-alt">
+            {parseInt(
+              formatEther(userInfoParsed.balance || 0n)
+            ).toLocaleString()}
+            &nbsp;LYNX
+          </span>
         </label>
       </div>
       <button
