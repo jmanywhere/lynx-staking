@@ -7,6 +7,7 @@ import {
   staking20,
   staking25,
   stakingConfig,
+  vault,
 } from "@/data/contracts";
 import classNames from "classnames";
 import { useAtomValue } from "jotai";
@@ -21,22 +22,49 @@ import {
 } from "wagmi";
 
 export default function StakingStats() {
+  const { data } = useContractReads({
+    contracts: [
+      {
+        address: staking18,
+        ...stakingConfig,
+        functionName: "totalStaked",
+      },
+      {
+        address: staking20,
+        ...stakingConfig,
+        functionName: "totalStaked",
+      },
+      {
+        address: staking25,
+        ...stakingConfig,
+        functionName: "totalStaked",
+      },
+    ],
+  });
   return (
-    <div className="py-4 flex flex-col gap-2">
-      <SingleStat title="Staked" value="1520" />
-      <SingleStat title="Time to Unlock" value="2 weeks" />
-      <SingleStat title="Rewarded" value="1520" />
-      <SingleStat title="Status" value="Locked" />
+    <div className="stats shadow stats-vertical sm:stats-horizontal text-primary border-2 border-primary">
+      <SingleStat
+        title="Staked"
+        value={formatEther(
+          (data?.[0]?.result || 0n) +
+            (data?.[1]?.result || 0n) +
+            (data?.[2]?.result || 0n)
+        )}
+        desc="LYNX"
+      />
+      <SingleStat title="Min Lock" value="2" desc="Weeks" />
+      <SingleStat title="APR" value="17.99%" desc="Min" />
     </div>
   );
 }
 
-function SingleStat(props: { title: string; value: string }) {
-  const { title, value } = props;
+function SingleStat(props: { title: string; value: string; desc: string }) {
+  const { title, value, desc } = props;
   return (
-    <div className="flex flex-row items-center justify-between font-raleway gap-6">
-      <p className="text-medium">{title}</p>
-      <div className="text-lg font-oswald">{value}</div>
+    <div className="stat">
+      <p className="stat-title">{title}</p>
+      <div className="stat-value">{value}</div>
+      <p className="stat-desc">{desc}</p>
     </div>
   );
 }
@@ -106,7 +134,7 @@ export function DepositAction() {
   const hasAllowance = (stakeActionInfo?.[1]?.result || 0n) > 0n;
   return (
     <>
-      <div className="pb-4">
+      <div className="py-4">
         <h3 className="text-xl font-bold">Deposit LYNX</h3>
         {apr > 0 ? (
           <h4 className="font-medium">Selected APR: {apr.toFixed(2)}%</h4>
@@ -146,7 +174,7 @@ export function DepositAction() {
       <button
         className={classNames(
           hasAllowance ? "btn-primary" : "btn-secondary",
-          "btn w-full btn-sm"
+          "btn w-full btn-sm max-w-xs"
         )}
         onClick={() => {
           if (hasAllowance) {
