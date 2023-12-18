@@ -100,6 +100,7 @@ export function DepositAction() {
         args: [address || zeroAddress, selectedAPR],
       },
     ],
+    watch: true,
   });
 
   const { config: approveConfig } = usePrepareContractWrite({
@@ -288,7 +289,6 @@ export function StakeStats() {
     ],
     watch: true,
   });
-  console.log({ data });
   return (
     <table className="table overflow-hidden">
       <thead className="bg-primary text-black">
