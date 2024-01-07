@@ -4,7 +4,7 @@ import StakingStats, {
   DepositAction,
   StakeStats,
 } from "@/components/stake/Stats";
-import stakingBackground from "@/../public/Background 2.png";
+import stakingBackground from "@/../public/bg_high.png";
 import { IoChevronDown } from "react-icons/io5";
 import AprSelect from "@/components/stake/AprSelect";
 import { Metadata } from "next";
@@ -12,12 +12,10 @@ export default function Home() {
   return (
     <main className="flex min-h-[calc(100vh-100px)] flex-col items-center relative">
       <section className="relative w-full h-full flex flex-col items-center overflow-clip">
-        <div className="absolute w-full h-full top-0">
-          <Image
-            src={stakingBackground}
-            alt="staking-background"
-            className="w-full h-auto"
-          />
+        <div className="absolute w-full h-full top-0 right-0 overflow-hidden">
+          <div className="w-[640px] xs:w-auto relative">
+            <Image src={stakingBackground} alt="staking-background" />
+          </div>
         </div>
         <div className="flex flex-col items-start justify-between w-full max-w-7xl py-4 md:py-10 px-4 z-20 bg-gradient-to-r from-base-100 to-transparent via-transparent via-90%">
           <div className="w-full">
@@ -55,7 +53,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="py-10">
+      <section className="py-10 w-full overflow-scroll px-4">
         <a className="relative block invisible -top-[100px]" id="stake" />
         <StakeStats />
       </section>

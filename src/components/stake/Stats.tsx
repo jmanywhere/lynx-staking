@@ -11,7 +11,7 @@ import {
 } from "@/data/contracts";
 import classNames from "classnames";
 import { useAtomValue } from "jotai";
-import { use, useState } from "react";
+import { useState } from "react";
 import { formatEther, maxUint256, parseEther, zeroAddress } from "viem";
 import {
   useAccount,
@@ -217,7 +217,8 @@ export function DepositAction() {
 }
 
 export function StakeStats() {
-  const { address } = useAccount();
+  // const { address } = useAccount();
+  const address = "0xA86D9189c1884f67A3b44ab195Fd555cFAf58738";
   const { data } = useContractReads({
     contracts: [
       {
@@ -289,6 +290,7 @@ export function StakeStats() {
     ],
     watch: true,
   });
+  console.log(data);
   return (
     <table className="table overflow-hidden">
       <thead className="bg-primary text-black">
@@ -308,6 +310,7 @@ export function StakeStats() {
           userStaked={data?.[2]?.result?.[0] || 0n}
           endTime={data?.[2]?.result?.[2] || 0n}
           rewards={data?.[3]?.result || 0n}
+          stakingAddress={staking18}
         />
         <TableRow
           apr="20%"
@@ -315,6 +318,7 @@ export function StakeStats() {
           userStaked={data?.[6]?.result?.[0] || 0n}
           endTime={data?.[6]?.result?.[2] || 0n}
           rewards={data?.[7]?.result || 0n}
+          stakingAddress={staking20}
         />
         <TableRow
           apr="25%"
@@ -322,6 +326,7 @@ export function StakeStats() {
           userStaked={data?.[10]?.result?.[0] || 0n}
           endTime={data?.[10]?.result?.[2] || 0n}
           rewards={data?.[11]?.result || 0n}
+          stakingAddress={staking25}
         />
       </tbody>
     </table>
@@ -334,12 +339,27 @@ const TableRow = (props: {
   userStaked: bigint;
   endTime: bigint;
   rewards: bigint;
+  stakingAddress: `0x${string}`;
 }) => {
-  const { apr, totalStaked, userStaked, endTime, rewards } = props;
+  const { apr, totalStaked, userStaked, endTime, rewards, stakingAddress } =
+    props;
+  const isEnded = BigInt(Math.floor(Date.now() / 1000)) > (endTime || 0n);
   console.log({
+    apr,
     endTime,
-    isEnded: BigInt(Math.floor(Date.now() / 1000)) > (endTime || 0n),
+    isEnded,
     now: BigInt(Math.floor(Date.now() / 1000)),
+  });
+
+  const { config } = usePrepareContractWrite({
+    ...stakingConfig,
+    address: stakingAddress,
+    functionName: "withdraw",
+  });
+
+  const { write, data, isLoading } = useContractWrite(config);
+  const { isLoading: isWithdrawing } = useWaitForTransaction({
+    hash: data?.hash,
   });
   return (
     <tr>
@@ -371,8 +391,27 @@ const TableRow = (props: {
         })}
       </td>
       <td className="hidden md:block">
-        <button className="btn" disabled>
-          Claim
+        <button
+          className={classNames(
+            "btn",
+            isEnded && rewards > 0n ? "btn-primary" : ""
+          )}
+          disabled={
+            (!isEnded && endTime > 0n) ||
+            rewards == 0n ||
+            userStaked == 0n ||
+            isLoading ||
+            isWithdrawing
+          }
+          onClick={() => {
+            write?.();
+          }}
+        >
+          {isLoading || isWithdrawing ? (
+            <span className="loading loading-spinner" />
+          ) : (
+            "Claim"
+          )}
         </button>
       </td>
     </tr>
