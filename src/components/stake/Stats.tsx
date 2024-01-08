@@ -217,8 +217,7 @@ export function DepositAction() {
 }
 
 export function StakeStats() {
-  // const { address } = useAccount();
-  const address = "0xA86D9189c1884f67A3b44ab195Fd555cFAf58738";
+  const { address } = useAccount();
   const { data } = useContractReads({
     contracts: [
       {
