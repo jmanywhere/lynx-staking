@@ -308,7 +308,7 @@ export function StakeStats() {
           totalStaked={data?.[0]?.result || 0n}
           userStaked={data?.[2]?.result?.[0] || 0n}
           endTime={data?.[2]?.result?.[2] || 0n}
-          rewards={data?.[3]?.result || 0n}
+          rewards={(data?.[3]?.result || 0n) + (data?.[2]?.result?.[4] || 0n)}
           stakingAddress={staking18}
         />
         <TableRow
@@ -316,7 +316,7 @@ export function StakeStats() {
           totalStaked={data?.[4]?.result || 0n}
           userStaked={data?.[6]?.result?.[0] || 0n}
           endTime={data?.[6]?.result?.[2] || 0n}
-          rewards={data?.[7]?.result || 0n}
+          rewards={(data?.[7]?.result || 0n) + (data?.[6]?.result?.[4] || 0n)}
           stakingAddress={staking20}
         />
         <TableRow
@@ -324,7 +324,7 @@ export function StakeStats() {
           totalStaked={data?.[8]?.result || 0n}
           userStaked={data?.[10]?.result?.[0] || 0n}
           endTime={data?.[10]?.result?.[2] || 0n}
-          rewards={data?.[11]?.result || 0n}
+          rewards={(data?.[11]?.result || 0n) + (data?.[10]?.result?.[4] || 0n)}
           stakingAddress={staking25}
         />
       </tbody>
@@ -343,12 +343,6 @@ const TableRow = (props: {
   const { apr, totalStaked, userStaked, endTime, rewards, stakingAddress } =
     props;
   const isEnded = BigInt(Math.floor(Date.now() / 1000)) > (endTime || 0n);
-  console.log({
-    apr,
-    endTime,
-    isEnded,
-    now: BigInt(Math.floor(Date.now() / 1000)),
-  });
 
   const { config } = usePrepareContractWrite({
     ...stakingConfig,
