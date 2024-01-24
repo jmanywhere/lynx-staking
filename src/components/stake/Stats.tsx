@@ -299,7 +299,7 @@ export function StakeStats() {
           <th>User Stake</th>
           <th>Claim Time</th>
           <th>Rewards</th>
-          <th className="hidden md:block">Action</th>
+          <th className="block">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -389,7 +389,7 @@ const TableRow = (props: {
           maximumFractionDigits: 4,
         })}
       </td>
-      <td className="hidden md:block">
+      <td className="block">
         <button
           className={classNames(
             "btn",
