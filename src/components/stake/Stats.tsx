@@ -138,7 +138,8 @@ export function DepositAction() {
     balance: stakeActionInfo?.[0]?.result || 0n,
   };
 
-  const hasAllowance = (stakeActionInfo?.[1]?.result || 0n) > 0n;
+  const hasAllowance =
+    (stakeActionInfo?.[1]?.result || 0n) > (parseEther(depositAmount) || 0n);
   return (
     <>
       <div className="py-4">
